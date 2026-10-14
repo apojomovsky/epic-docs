@@ -1,0 +1,5 @@
+site_name: devices
+docs_dir: devices
+nav:
+  - Device matrix: index.md
+  - Device families: family.md

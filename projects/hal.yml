@@ -1,0 +1,5 @@
+site_name: hal
+docs_dir: hal
+nav:
+  - HAL modules: index.md
+  - A HAL module: module.md

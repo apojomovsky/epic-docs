@@ -1,0 +1,5 @@
+site_name: tools
+docs_dir: tools
+nav:
+  - Tools: index.md
+  - Programmers: programmers.md

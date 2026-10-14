@@ -1,0 +1,6 @@
+site_name: compiler
+docs_dir: compiler
+nav:
+  - Compiler reference: index.md
+  - CLI flags: cli-flags.md
+  - Language support: language.md
