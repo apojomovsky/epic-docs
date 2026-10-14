@@ -31,4 +31,6 @@ nav:
   - Tools: '!include projects/tools.yml'
   - What's in 1.0: status.md
   - Explanation: '!include projects/explanation.yml'
-  - Internals / Contributing: internals/index.md
+  - Internals / Contributing:
+      - internals/index.md
+      - Style guide: internals/style-guide.md
