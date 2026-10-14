@@ -1,0 +1,47 @@
+<!-- README template for every epic8 repository (design section 5). Target 80 to 120 lines. This is the README.src.md source: the repository generator (make docs-gen) renders README.md from it, resolving every --8<-- include, because GitHub shows README.md as-is. Replace every {{...}}; delete these comments. -->
+<p align="center"><!-- repository logo, light and dark variants, alt text says what it shows --></p>
+
+# {{repo-name}}
+
+{{One sentence: what it is and for whom. Example: "A C compiler for 8-bit PIC microcontrollers, fully open source and MIT licensed."}}
+
+[![CI]({{ci-badge}})]({{ci-link}}) [![License: MIT]({{licence-badge}})](LICENSE) [![Release]({{release-badge}})]({{release-link}})
+
+## Why {{repo-name}}
+
+- **Fully open source, MIT licensed.** {{One sentence on what that means here.}}
+- {{Second reason, concrete and checkable.}}
+- {{Third reason, concrete and checkable.}}
+
+**Status:** {{one line, for example "Ready for hobby projects on the supported parts."}} See [What's in 1.0]({{hub}}/status/).
+
+## The shortest example
+
+```c
+--8<-- "{{path/to/tested/example.c}}"
+```
+
+```bash
+--8<-- "{{path/to/tested/build-command.sh}}"
+```
+
+{{One sentence: what you should see.}}
+
+## Install
+
+```bash
+--8<-- "{{shared include: install for this repository's primary path}}"
+```
+
+--8<-- "{{shared include: ways-to-use-epic8.md}}"
+
+## Where next
+
+- [Getting started]({{hub}}/getting-started/): your first blink, in the simulator and on a chip.
+- [Guides]({{hub}}/guides/): how to do specific things.
+- [Reference]({{hub}}/{{this repository's reference section}}/): every {{device, module, flag, board}}.
+- [How it works]({{hub}}/explanation/): the design, for the curious.
+
+## Contributing and licence
+
+Contributions are welcome: see [Contributing]({{hub}}/contributing/). {{repo-name}} is MIT licensed; see [LICENSE](LICENSE).
