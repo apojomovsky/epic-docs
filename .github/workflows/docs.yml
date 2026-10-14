@@ -42,7 +42,7 @@ jobs:
       - run: make pre-pr-check
       - uses: lycheeverse/lychee-action@v2
         with:
-          args: --no-progress site/
+          args: --no-progress --exclude '^https://apojomovsky\.github\.io/epic-docs' epic-docs/site/
       - uses: actions/upload-artifact@v4
         with:
           name: site
