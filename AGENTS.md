@@ -23,7 +23,7 @@ For every ticket:
 1. `epic-tasks next` to see what you may take, `epic-tasks claim
    <repo>#<n>` to take it.
 2. Create a worktree under `.worktrees/` and branch as
-   `<type>/<issue>-<slug>`, never work on `master`.
+   `<type>/<issue>-<slug>`, never work on `main`.
 3. Develop, then dispatch a separate reviewer for the code and address
    its findings (the Review gate, canonical in epic-tasks'
    `AGENTS.md`). Only then run the takeoff ritual (`make
@@ -72,7 +72,7 @@ them out the same way.
 
 `.github/workflows/docs.yml` builds the site strict on every push and
 PR, link-checks the built site, and deploys to GitHub Pages from
-`master` only.
+`main` only.
 
 ## Ground rules
 
@@ -81,4 +81,4 @@ PR, link-checks the built site, and deploys to GitHub Pages from
   specific post directly, in your own session (canonical: epic-tasks'
   `AGENTS.md`, "Third-party repositories").
 - **No force pushes.** The pre-push hook refuses them; rebase onto
-  master instead.
+  main instead.

@@ -2,7 +2,7 @@ name: docs
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
 
 permissions:
@@ -48,7 +48,7 @@ jobs:
           name: site
           path: epic-docs/site
   deploy:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     permissions:
