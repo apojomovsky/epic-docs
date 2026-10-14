@@ -7,6 +7,9 @@ docs_dir: docs
 theme:
   name: material
 
+markdown_extensions:
+  - admonition
+
 plugins:
   - monorepo
   - search
