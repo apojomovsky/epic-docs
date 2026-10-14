@@ -22,7 +22,10 @@ validation:
 # projects/; every other row is a hub-owned page under docs/.
 nav:
   - Home: index.md
-  - Getting started: getting-started.md
+  - Getting started:
+      - getting-started/index.md
+      - getting-started/cli.md
+      - getting-started/platformio.md
   - Guides: guides/index.md
   - Devices: '!include projects/devices.yml'
   - HAL modules: '!include projects/hal.yml'
@@ -31,6 +34,7 @@ nav:
   - Tools: '!include projects/tools.yml'
   - What's in 1.0: status.md
   - Explanation: '!include projects/explanation.yml'
+  - Contributing: contributing/index.md
   - Internals / Contributing:
       - internals/index.md
       - Style guide: internals/style-guide.md
