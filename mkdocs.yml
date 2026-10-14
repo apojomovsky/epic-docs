@@ -1,0 +1,34 @@
+site_name: epic8 documentation
+site_description: Documentation hub for the epic8 family, a fully open source, MIT licensed PIC toolchain, HAL and PlatformIO platform.
+site_url: https://apojomovsky.github.io/epic-docs/
+repo_url: https://github.com/apojomovsky/epic-docs
+docs_dir: docs
+
+theme:
+  name: material
+
+plugins:
+  - monorepo
+  - search
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+
+# Navigation follows the information architecture in
+# epic-tasks/docs/08-docs-overhaul.md, section 3. Sections owned by
+# another repository resolve through that repository's alias shim in
+# projects/; every other row is a hub-owned page under docs/.
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Guides: guides/index.md
+  - Devices: '!include projects/devices.yml'
+  - HAL modules: '!include projects/hal.yml'
+  - Compiler reference: '!include projects/compiler.yml'
+  - PlatformIO: '!include projects/platformio.yml'
+  - Tools: '!include projects/tools.yml'
+  - What's in 1.0: status.md
+  - Explanation: '!include projects/explanation.yml'
+  - Internals / Contributing: internals/index.md

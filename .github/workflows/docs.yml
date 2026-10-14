@@ -1,0 +1,75 @@
+name: docs
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: epic-docs
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: epic-docs
+      - uses: actions/checkout@v4
+        with:
+          repository: apojomovsky/epic-cc
+          path: epic-cc
+      - uses: actions/checkout@v4
+        with:
+          repository: apojomovsky/epic-hal
+          path: epic-hal
+      - uses: actions/checkout@v4
+        with:
+          repository: apojomovsky/epic-platformio
+          path: epic-platformio
+      - uses: actions/checkout@v4
+        with:
+          repository: apojomovsky/epic-tools
+          path: epic-tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: make pre-pr-check
+      # External links only: internal links are gated by the strict
+      # build. Self links point at the Pages subpath, which 404s until
+      # deployed, and 404.html uses deployment-context root-relative
+      # links, so both are excluded. The 404 page's externals repeat
+      # theme links checked on every other page.
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --exclude '^https://apojomovsky\.github\.io/epic-docs' --exclude-path '404\.html$' epic-docs/site/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: epic-docs/site
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

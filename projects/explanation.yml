@@ -1,0 +1,4 @@
+site_name: explanation
+docs_dir: explanation
+nav:
+  - Explanation: index.md

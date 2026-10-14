@@ -1,0 +1,5 @@
+site_name: platformio
+docs_dir: platformio
+nav:
+  - PlatformIO: index.md
+  - Boards: boards.md
