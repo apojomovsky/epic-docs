@@ -1,5 +1,23 @@
 site_name: hal
-docs_dir: hal
+docs_dir: ../../epic-hal/docs/user
 nav:
   - HAL modules: index.md
-  - A HAL module: module.md
+  - Modules:
+      - lib/adcfilter: modules/adcfilter.md
+      - lib/bus: modules/bus.md
+      - lib/console: modules/console.md
+      - lib/debounce: modules/debounce.md
+      - lib/encoder: modules/encoder.md
+      - lib/fsm: modules/fsm.md
+      - lib/lcd: modules/lcd.md
+      - lib/math: modules/math.md
+      - lib/mcp23x17: modules/mcp23x17.md
+      - lib/modbus: modules/modbus.md
+      - lib/pid: modules/pid.md
+      - lib/sdcard: modules/sdcard.md
+      - lib/serial: modules/serial.md
+      - lib/settings: modules/settings.md
+      - lib/swuart: modules/swuart.md
+      - lib/taskmgr: modules/taskmgr.md
+      - lib/tick: modules/tick.md
+      - lib/usb: modules/usb.md
