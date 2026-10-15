@@ -1,5 +1,14 @@
 site_name: devices
-docs_dir: devices
+docs_dir: ../../epic-cc/docs/user/devices
 nav:
   - Device matrix: index.md
-  - Device families: family.md
+  - Device families:
+      - families/pic10f-pic14.md
+      - families/pic12f-pic12-baseline.md
+      - families/pic12f-pic14.md
+      - families/pic16f-pic12-baseline.md
+      - families/pic16f-pic14.md
+      - families/pic16f-pic14e.md
+      - families/pic16lf-pic14.md
+      - families/pic18f-pic18.md
+      - families/pic18lf-pic18.md
