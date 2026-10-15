@@ -29,7 +29,11 @@ nav:
       - getting-started/index.md
       - getting-started/cli.md
       - getting-started/platformio.md
-  - Guides: guides/index.md
+  - Guides:
+      - guides/index.md
+      - guides/gpio.md
+      - guides/timers-interrupts.md
+      - guides/uart.md
   - Devices: '!include projects/devices.yml'
   - HAL modules: '!include projects/hal.yml'
   - Compiler reference: '!include projects/compiler.yml'
