@@ -19,13 +19,15 @@ This guide shows you how to set a pin as an output, drive it, and read a button 
 
 2. Drive the pin high or low with `EPIC_GPIO_WritePin`. This turns the LED on, then off, around a 500 ms delay (the [timers guide](timers-interrupts.md) explains the delay):
 
+    From `lib/tick/examples/example_tick.c` in epic-hal:
+
     ```c
     EPIC_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
     epic_tick_delay_ms(BLINK_MS);
     EPIC_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
     ```
 
-3. Flip a pin without knowing its level with `EPIC_GPIO_TogglePin`. From the same file, in the loop that blinks the LED:
+3. Flip a pin without knowing its level with `EPIC_GPIO_TogglePin`. From `lib/tick/examples/example_tick.c` in epic-hal, in the loop that blinks the LED:
 
     ```c
     EPIC_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
@@ -37,6 +39,8 @@ This guide shows you how to set a pin as an output, drive it, and read a button 
     EPIC_GPIO_Init(GPIOB, GPIO_PIN_0 | GPIO_PIN_1, GPIO_MODE_INPUT);
     EPIC_GPIO_Init(GPIOB, GPIO_PIN_2 | GPIO_PIN_3, GPIO_MODE_OUTPUT);
     ```
+
+    From `lib/debounce/examples/example_debounce.c`, the read function both buttons share:
 
     ```c
     static bool read_button(void *ctx)

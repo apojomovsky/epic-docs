@@ -1,0 +1,77 @@
+import os
+import sys
+import unittest
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
+
+import snippet_sources
+
+
+def check(text, roots=("/",)):
+    return snippet_sources.check_lines(text.splitlines(), "gpio.md", roots)
+
+
+class SnippetCheckTest(unittest.TestCase):
+    def test_cited_block_passes_when_file_exists(self):
+        text = ("From `tests/test_snippet_sources.py`:\n\n"
+                "```c\nEPIC_GPIO_Init(x);\n```\n")
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.assertEqual(check(text, roots=[root]), [])
+
+    def test_missing_citation_flagged(self):
+        text = "Drive the pin high:\n\n```c\nEPIC_GPIO_WritePin(x);\n```\n"
+        self.assertEqual(len(check(text)), 1)
+
+    def test_untagged_block_flagged(self):
+        text = "Output:\n\n```\nsome text\n```\n"
+        self.assertEqual(len(check(text)), 1)
+
+    def test_commands_exempt(self):
+        text = ("Build it:\n\n```bash\nmake build\n```\n\n"
+                "Output:\n\n```console\nPASS\n```\n")
+        self.assertEqual(check(text), [])
+
+    def test_mermaid_exempt(self):
+        text = "Flow:\n\n```mermaid\ngraph TD\n```\n"
+        self.assertEqual(check(text), [])
+
+    def test_missing_source_file_flagged(self):
+        text = ("From `lib/nope/missing.c`:\n\n```c\nint x;\n```\n")
+        found = check(text)
+        self.assertEqual(len(found), 1)
+        self.assertIn("not found", found[0][1])
+
+    def test_snippet_include_counts(self):
+        text = "```c\n--8<-- \"tests/test_snippet_sources.py\"\n```\n"
+        here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.assertEqual(check(text, roots=[here]), [])
+
+    def test_anaphoric_citation_rejected(self):
+        text = ("From the same file:\n\n```c\nEPIC_GPIO_TogglePin(x);\n```\n")
+        self.assertEqual(len(check(text)), 1)
+
+    def test_text_block_needs_citation(self):
+        text = "Pasted:\n\n```text\nEPIC_GPIO_Init(x);\n```\n"
+        found = check(text)
+        self.assertEqual(len(found), 1)
+        self.assertIn("tested source", found[0][1])
+
+    def test_unclosed_fence_flagged(self):
+        text = "From `tests/test_snippet_sources.py`:\n\n```c\nint x;\n"
+        found = check(text)
+        self.assertEqual(len(found), 1)
+        self.assertIn("unclosed", found[0][1])
+
+    def test_build_artifact_citation_rejected(self):
+        text = ("From `build/epiccc/16F877A-tick.hex`:\n\n"
+                "```c\nEPIC_GPIO_Init(x);\n```\n")
+        found = check(text)
+        self.assertEqual(len(found), 1)
+        self.assertIn("not a tested source", found[0][1])
+
+    def test_unknown_option_exits_two(self):
+        self.assertEqual(snippet_sources.main(["x.py", "--nope"]), 2)
+
+
+if __name__ == "__main__":
+    unittest.main()
