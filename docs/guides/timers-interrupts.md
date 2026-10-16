@@ -17,13 +17,17 @@ This guide shows you how to wait without blocking, and how to run a function on 
     epic_tick_init(FOSC_HZ);        /* starts the 1 ms tick and enables GIE */
     ```
 
-2. Wait with `epic_tick_delay_ms` when nothing else needs to run. It blocks, so the chip does nothing else meanwhile:
+2. Wait with `epic_tick_delay_ms` when nothing else needs to run. It blocks, so the chip does nothing else meanwhile.
+
+    From `lib/tick/examples/example_tick.c` in epic-hal:
 
     ```c
     epic_tick_delay_ms(BLINK_MS);
     ```
 
-3. Keep the chip free instead by comparing timestamps. Read the time with `epic_tick_get`, and ask later how long has passed. The unsigned subtraction stays correct when the counter wraps around:
+3. Keep the chip free instead by comparing timestamps. Read the time with `epic_tick_get`, and ask later how long has passed. The unsigned subtraction stays correct when the counter wraps around.
+
+    From `lib/tick/examples/example_tick.c` in epic-hal:
 
     ```c
     uint32_t last = epic_tick_get();
@@ -49,7 +53,9 @@ This guide shows you how to wait without blocking, and how to run a function on 
     }
     ```
 
-5. Configure Timer0 with a handle, start it, and enable interrupts. The clock source is the instruction clock (a quarter of the crystal), divided by 256 here, so Timer0 overflows about every 13 ms at 20 MHz:
+5. Configure Timer0 with a handle, start it, and enable interrupts. The clock source is the instruction clock (a quarter of the crystal), divided by 256 here, so Timer0 overflows about every 13 ms at 20 MHz.
+
+    From `hal/pic14/16f87xa/tests/example_blink.c`, the same test as step 4:
 
     ```c
     TIMER0_HandleTypeDef h = TIMER0_HANDLE_DEFAULT;

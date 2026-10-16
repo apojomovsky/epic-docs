@@ -9,7 +9,7 @@ COMMON_DIR := $(shell git rev-parse --git-common-dir 2>/dev/null || echo .git)
 SIBLING_DIR := $(abspath $(COMMON_DIR)/../..)
 SIBLINGS := epic-cc epic-hal epic-platformio epic-tools
 
-.PHONY: install build serve pre-pr-check check-siblings clean
+.PHONY: install build serve pre-pr-check check-siblings validate test clean
 
 install: $(MKDOCS)
 
@@ -28,7 +28,18 @@ check-siblings:
 		test -d $(SIBLING_DIR)/$$repo || { echo "missing sibling checkout: $(SIBLING_DIR)/$$repo"; exit 1; }; \
 	done
 
-pre-pr-check: check-siblings build
+pre-pr-check: check-siblings validate test build
+
+# Section 12 gates. The scripts use stdlib only, so they run on system
+# python without the venv; readme_budget only reports, each repository
+# enforces its own README.
+validate: check-siblings
+	python3 scripts/prose_lint.py
+	python3 scripts/snippet_sources.py
+	python3 scripts/readme_budget.py
+
+test:
+	python3 -m unittest discover -t . -s tests
 
 clean:
 	rm -rf site $(VENV)

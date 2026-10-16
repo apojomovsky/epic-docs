@@ -20,10 +20,12 @@ This guide shows you how to print text to your computer and echo what it sends b
 
     Initializing enables the receive interrupt, and `EPIC_IRQ_Restore(1)` sets the global interrupt enable so it can fire.
 
-2. Send text one character at a time with `epic_serial_put_char`. The example keeps the text in a `const` array so the array lives in flash, not RAM:
+2. Send text one character at a time with `epic_serial_put_char`. The example keeps the text in a `const` array so the array lives in flash, not RAM.
+
+    From `lib/serial/examples/example_serial.c` in epic-hal:
 
     ```c
-    static const uint8_t banner[] = "lib/serial ready at 115200 8N1\r\n";
+    static const uint8_t banner[] = "epic-serial ready at 115200 8N1\r\n";
     for (uint8_t i = 0u; i < (uint8_t)(sizeof(banner) - 1u); i++)
     {
         epic_serial_put_char((char)banner[i]);
@@ -32,7 +34,9 @@ This guide shows you how to print text to your computer and echo what it sends b
 
     The module also has `epic_serial_put_u16`, `epic_serial_put_hex8` and others for numbers; see the [HAL module reference](../hal/index.md).
 
-3. Receive by asking how many bytes are waiting, then reading them. The example sends every byte back, which is an echo:
+3. Receive by asking how many bytes are waiting, then reading them. The example sends every byte back, which is an echo.
+
+    From `lib/serial/examples/example_serial.c` in epic-hal:
 
     ```c
     static uint8_t buf[8];
