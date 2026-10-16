@@ -4,7 +4,7 @@ This page explains what the epic8 simulators model and what a passing run tells 
 
 ## Two simulators, one for each path
 
-The difference is what surrounds the processor model. MPLAB SIM models some peripherals: on the families its models cover, a timer advances as the program steps, and port reads reflect output latches the way silicon presents them. The epic-cc simulator models the processor and its registers but not the peripherals or the oscillator. Where a test needs a timer interrupt, the runner raises the interrupt itself on a step schedule, through the same flag and enable bits the peripheral would use.
+The difference is what surrounds the processor model. MPLAB SIM models some peripherals: on the families its models cover, a timer advances as the program steps, and port reads reflect output latches the way silicon presents them (on PIC16 families; on PIC18 read the latch register, `LATA`, not `PORTx`). The epic-cc simulator models the processor and its registers but not the peripherals or the oscillator. Where a test needs a timer interrupt, the runner raises the interrupt itself on a step schedule, through the same flag and enable bits the peripheral would use.
 
 ## What a passing run means
 
@@ -14,7 +14,7 @@ This contract proves your program logic and your interrupt path. The timer inter
 
 ## What simulation cannot prove
 
-- Peripherals the model does not carry stay silent. Serial receive, analog input, and EEPROM (electrically erasable programmable read-only memory) writes behave differently from silicon or need debugger assistance, depending on the simulator. Module pages document these limits where they apply.
+- Peripherals the model does not carry stay silent. Serial receive, analog input, and electrically erasable programmable read-only memory (EEPROM) writes behave differently from silicon or need debugger assistance, depending on the simulator. Module pages document these limits where they apply.
 
 - Timing figures come from interrupts you count, not from a clock the simulator models. The simulator has no oscillator, so it cannot tell you how fast your chip runs.
 - Real hardware adds the board. The crystal value, the supply, the wiring, and the configuration words decide whether a passing program blinks on your bench. Flashing is tested in simulation and awaits sign-off on real chips; see [What's in 1.0](../status.md).
@@ -31,4 +31,4 @@ graph TD
 ```
 
 !!! tip
-    When a gate fails, rerun it with tracing enabled before changing code. The trace shows which instructions ran and which interrupt fired, so you see the failure instead of guessing at it.
+    When a gate fails, rerun it with tracing enabled before changing code. The trace prints register values per sample, so you see whether the flag latched and the handler serviced it instead of guessing at it.

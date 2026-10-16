@@ -9,11 +9,11 @@ epic8 is a family of four repositories under one licence. Each one owns a distin
 | Repository | What it owns |
 |---|---|
 | [epic-cc](https://github.com/apojomovsky/epic-cc) | The C compiler: it turns your C files into a hex file in one command, with its own bundled clang, so you install nothing else to compile. |
-| [epic-hal](https://github.com/apojomovsky/epic-hal) | The hardware abstraction layer: a register-level port per family plus drop-in modules for the things firmware always needs, such as a scheduler, a timebase, and serial ports. The same code builds under epic-cc and under MPLAB XC8. |
-| [epic-platformio](https://github.com/apojomovsky/epic-platformio) | The PlatformIO platform: it makes `pio run` compile with epic-cc and wires in epic-hal as an optional framework. MPLAB XC8 stays available as a fully supported alternate toolchain. |
-| [epic-tools](https://github.com/apojomovsky/epic-tools) | The programmer tool packages: it turns each flashing tool into a PlatformIO tool package, so upload resolves the right binary for your machine without you building anything. |
+| [epic-hal](https://github.com/apojomovsky/epic-hal) | The hardware abstraction layer: a register-level port per family plus drop-in modules for the things firmware always needs, such as a scheduler, a timebase, and serial ports. The same module sources build under epic-cc and under MPLAB XC8, with a narrower conformant file set on the epic-cc path. |
+| [epic-platformio](https://github.com/apojomovsky/epic-platformio) | The PlatformIO platform: it makes `pio run` compile with epic-cc and wires in epic-hal as an optional framework. MPLAB XC8 stays available as a fully supported alternate toolchain on boards that list both toolchains. |
+| [epic-tools](https://github.com/apojomovsky/epic-tools) | The programmer tool packages: it turns each flashing tool into a PlatformIO tool package, so upload on Linux x86-64 resolves the right binary for your machine without you building anything. |
 
-The diagram below traces a program from your source to the chip. You pick one of the two build paths, both produce the same hex file, and that file either runs in the simulator or goes onto the part through a programmer.
+The diagram below traces a program from your source to the chip. You pick one of the two build paths; both build from the same compiler and the same hardware abstraction layer (HAL), and that file either runs in the simulator or goes onto the part through a programmer.
 
 ```mermaid
 graph LR
@@ -28,9 +28,9 @@ graph LR
 
 ## Why two build paths exist
 
-The command line path keeps every step visible: you invoke the compiler, you invoke `make`, you see each command and its output. The PlatformIO path hides that machinery behind `pio run` and gives you boards, dependencies, and upload in one project file. Both consume the same compiler and the same hardware abstraction layer (HAL), so a program that builds on one builds on the other, and the [tutorials](../getting-started/index.md) teach both from the same blinking example.
+The command line path keeps every step visible: you invoke the compiler, you invoke `make`, you see each command and its output. The PlatformIO path hides that machinery behind `pio run` and gives you boards, dependencies, and upload in one project file. Both consume the same compiler and the same hardware abstraction layer (HAL), so programs in the shared subset build on either path, and [Getting started](../getting-started/index.md) teaches both from the same blinking example.
 
-This split is a deliberate layering rule. The epic-cc and epic-hal pages stay toolchain-neutral: they assume the command line and Make only, never PlatformIO. The epic-platformio pages form the complete PlatformIO path end to end and link back to the compiler and HAL reference pages for depth instead of copying them. The only link in the other direction is the shared [Ways to use epic8](../index.md) include, rendered on the home page and every README, which sends each reader to the path that fits how they work.
+This split is a deliberate layering rule. The epic-cc and epic-hal pages stay toolchain-neutral by rule: they assume the command line and Make only, never PlatformIO. The epic-platformio pages form the complete PlatformIO path end to end and link back to the compiler and HAL reference pages for depth instead of copying them. The only link in the other direction is the shared [Ways to use epic8](../index.md) include, rendered on the home page and every README, which sends each reader to the path that fits how they work.
 
 ## Where each question is answered
 
