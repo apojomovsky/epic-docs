@@ -1,6 +1,5 @@
 site_name: compiler
-docs_dir: compiler
+docs_dir: ../../epic-cc/docs/user/compiler
 nav:
   - Compiler reference: index.md
   - CLI flags: cli-flags.md
-  - Language support: language.md
