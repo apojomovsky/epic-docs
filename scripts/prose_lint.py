@@ -53,10 +53,10 @@ WHATS_IN_RE = re.compile(r"What(?:'s| is) in 1\.0")
 IDENT_CHAR_RE = re.compile(r"[A-Za-z0-9_\-]")
 MEASURE_RE = re.compile(r"\A\s*(?:%|°C?|[VvAa]\b|ms\b|s\b|min\b"
                         r"|[pnµμum]?[Ff]\b|[MkG]?Hz\b|[kMGT]?B\b)")
-
 PROPER_NOUNS = frozenset({
     "PlatformIO", "GitHub", "Linux", "Docker", "Arduino", "Microchip",
     "Mermaid", "Python", "Windows", "macOS", "Ubuntu", "Debian",
+    "C",
 })
 
 FENCE_RE = re.compile(r"^(```|~~~)")

@@ -87,16 +87,15 @@ class HeadingsTest(unittest.TestCase):
 
     def test_title_case_flagged(self):
         self.assertEqual(len(findings("## Check That It Works\n")), 3)
+    def test_slash_sections_allowed(self):
+        self.assertEqual(findings("# Internals / Contributing\n"), [])
 
-    def test_first_word_always_allowed(self):
-        self.assertEqual(findings("# Contributing\n"), [])
+    def test_c_language_allowed(self):
+        self.assertEqual(findings("# How a C file becomes a hex file\n"), [])
 
     def test_acronyms_and_parts_allowed(self):
         self.assertEqual(findings("# Send and receive over UART\n"), [])
         self.assertEqual(findings("## Part 1: in the simulator\n"), [])
-
-    def test_slash_sections_allowed(self):
-        self.assertEqual(findings("# Internals / Contributing\n"), [])
 
 
 class VersionTest(unittest.TestCase):
