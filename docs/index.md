@@ -1,7 +1,8 @@
 # epic8 documentation
 
-epic8 is a fully open source, MIT licensed toolchain, HAL and
-PlatformIO platform for 8-bit PIC microcontrollers.
+epic8 is an open source toolchain for 8-bit PIC microcontrollers: a C
+compiler, a hardware abstraction layer, a PlatformIO platform and programmer
+tools, all MIT licensed and built to work together.
 
 ## The family
 
