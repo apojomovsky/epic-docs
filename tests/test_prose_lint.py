@@ -112,6 +112,17 @@ class VersionTest(unittest.TestCase):
         self.assertEqual(findings("a 0.1 uF capacitor\n"), [])
         self.assertEqual(findings("runs at 3.3 V\n"), [])
 
+    def test_spdx_identifiers_allowed(self):
+        self.assertEqual(findings("The program is GPL-3.0-or-later.\n"), [])
+        self.assertEqual(findings("| Licence | GPL-2.0-only |\n"), [])
+
+    def test_status_page_variant_allowed(self):
+        self.assertEqual(findings("see [What is in 1.0](status.md)\n"), [])
+
+    def test_sentence_ending_version_flagged(self):
+        found = findings("supported in 2.0.\n")
+        self.assertEqual(len(found), 1)
+        self.assertIn("version string", found[0][1])
     def test_status_page_link_allowed(self):
         self.assertEqual(findings("see [What's in 1.0](status.md)\n"), [])
 

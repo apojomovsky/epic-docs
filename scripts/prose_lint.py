@@ -49,7 +49,8 @@ XC8_RE = re.compile(r"\bxc8\b", re.IGNORECASE)
 DIGIT_RE = re.compile(r"\d")
 
 VERSION_RUN_RE = re.compile(r"\bv?\d+(?:\.\d+)+\b")
-WHATS_IN = "What's in 1.0"
+WHATS_IN_RE = re.compile(r"What(?:'s| is) in 1\.0")
+IDENT_CHAR_RE = re.compile(r"[A-Za-z0-9_\-]")
 MEASURE_RE = re.compile(r"\A\s*(?:%|°C?|[VvAa]\b|ms\b|s\b|min\b"
                         r"|[pnµμum]?[Ff]\b|[MkG]?Hz\b|[kMGT]?B\b)")
 
@@ -120,10 +121,15 @@ def check_heading(text, lineno, path):
 
 def check_version(prose, lineno, path):
     findings = []
-    clean = prose.replace(WHATS_IN, "")
+    clean = WHATS_IN_RE.sub("", prose)
     for match in VERSION_RUN_RE.finditer(clean):
         token = match.group(0)
         if len(token.split(".")) > 3 or token.count(".") >= 3:
+            continue
+        before = clean[match.start() - 1] if match.start() > 0 else ""
+        after = clean[match.end():match.end() + 1]
+        if (before and IDENT_CHAR_RE.match(before)) or (
+                after and IDENT_CHAR_RE.match(after)):
             continue
         if MEASURE_RE.match(clean[match.end():]):
             continue
