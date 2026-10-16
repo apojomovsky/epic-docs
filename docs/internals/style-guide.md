@@ -37,6 +37,9 @@ these: it lives under Internals and user pages never link to it.
   "easy"). **(lint)** Show it working instead.
 - No jokes that need context; no emoji in prose.
 - When something is a limitation, say so plainly and link the status page.
+- No audience clause in a tagline or opening sentence; say what the project
+  does and what is distinctive about it. "Who we write for" guides how pages
+  explain things, not what they claim.
 
 ## Positioning (all public text)
 
