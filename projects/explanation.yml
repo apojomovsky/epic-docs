@@ -2,3 +2,7 @@ site_name: explanation
 docs_dir: explanation
 nav:
   - Explanation: index.md
+  - How the toolchain fits together: toolchain.md
+  - How the HAL is structured: hal-structure.md
+  - What the simulator proves: simulator.md
+  - How a C file becomes a hex file: c-to-hex.md
