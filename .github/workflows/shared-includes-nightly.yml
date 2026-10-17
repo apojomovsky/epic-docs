@@ -1,0 +1,43 @@
+name: shared-includes-nightly
+
+# Backstop for the vendored epic-docs copies (epic-docs#11). The per-repo
+# local check compares each copy with its self-reported SHARED-INCLUDES
+# record, so a hand rewritten record passes PR CI. This job fetches the hub
+# file at each recorded commit and compares it with the consumer copy.
+# Deliberately outside the PR path: PR checks stay offline, and three
+# fetches a day stay far under any rate limit.
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: epic-docs
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: epic-docs
+      - uses: actions/checkout@v4
+        with:
+          repository: apojomovsky/epic-cc
+          path: epic-cc
+      - uses: actions/checkout@v4
+        with:
+          repository: apojomovsky/epic-hal
+          path: epic-hal
+      - uses: actions/checkout@v4
+        with:
+          repository: apojomovsky/epic-platformio
+          path: epic-platformio
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 scripts/verify_shared_includes.py
