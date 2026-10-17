@@ -3,3 +3,5 @@ docs_dir: ../../epic-platformio/docs/user
 nav:
   - PlatformIO: index.md
   - Boards: boards.md
+  - Debugging: debugging.md
+  - Hardware sign-off: hardware-signoff.md
