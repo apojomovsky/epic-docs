@@ -50,3 +50,4 @@ nav:
   - Internals / Contributing:
       - internals/index.md
       - Style guide: internals/style-guide.md
+      - Migration map: internals/MIGRATION.md
