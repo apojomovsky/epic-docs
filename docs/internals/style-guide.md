@@ -97,6 +97,8 @@ Expand an abbreviation the first time a page uses it.
 - Never write a version number, a device count or a device list in prose.
   **(lint: version pattern in prose)** Link the generated page instead:
   supported devices, HAL modules, boards, CLI flags, versions.
+  Product names that carry a version-like number (PICkit 3.5) stay as
+  written; the lint allowlists them.
 - Never restate a fact another page owns; link to it.
 - When a statement depends on the release (for example "supported in 1.0"),
   link the "What's in 1.0" page.

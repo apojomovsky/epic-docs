@@ -125,6 +125,17 @@ class VersionTest(unittest.TestCase):
     def test_status_page_link_allowed(self):
         self.assertEqual(findings("see [What's in 1.0](status.md)\n"), [])
 
+    def test_product_names_allowed(self):
+        for line in ("flash with the PICkit 3.5\n",
+                     "flash with the PICkit 2\n",
+                     "open the project in MPLAB X\n"):
+            self.assertEqual(findings(line), [], line)
+
+    def test_product_lookalike_still_flagged(self):
+        found = findings("supported in 3.5\n")
+        self.assertEqual(len(found), 1)
+        self.assertIn("version string", found[0][1])
+
     def test_code_skipped(self):
         self.assertEqual(findings("version = `2.0`\n"), [])
 
