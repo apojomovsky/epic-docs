@@ -53,6 +53,14 @@ WHATS_IN_RE = re.compile(r"What(?:'s| is) in 1\.0")
 IDENT_CHAR_RE = re.compile(r"[A-Za-z0-9_\-]")
 MEASURE_RE = re.compile(r"\A\s*(?:%|°C?|[VvAa]\b|ms\b|s\b|min\b"
                         r"|[pnµμum]?[Ff]\b|[MkG]?Hz\b|[kMGT]?B\b)")
+# PICkit 3.5, PICkit 2 and MPLAB X name a Microchip product, not a
+# release, so the version rule lets them through. Keep this list to
+# names that actually appear in the tree; anything else stays a finding.
+PRODUCT_NAME_RES = [
+    re.compile(r"\bPICkit\s+2\b"),
+    re.compile(r"\bPICkit\s+3\.5\b"),
+    re.compile(r"\bMPLAB\s+X\b"),
+]
 PROPER_NOUNS = frozenset({
     "PlatformIO", "GitHub", "Linux", "Docker", "Arduino", "Microchip",
     "Mermaid", "Python", "Windows", "macOS", "Ubuntu", "Debian",
@@ -122,8 +130,13 @@ def check_heading(text, lineno, path):
 def check_version(prose, lineno, path):
     findings = []
     clean = WHATS_IN_RE.sub("", prose)
+    products = [span for pattern in PRODUCT_NAME_RES
+                for span in (match.span() for match in pattern.finditer(clean))]
     for match in VERSION_RUN_RE.finditer(clean):
         token = match.group(0)
+        if any(start <= match.start() and match.end() <= end
+               for start, end in products):
+            continue
         if len(token.split(".")) > 3 or token.count(".") >= 3:
             continue
         before = clean[match.start() - 1] if match.start() > 0 else ""
